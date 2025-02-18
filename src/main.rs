@@ -140,6 +140,6 @@ fn restart_windows_service(service_name: &str) {
     
     if !output.status.success() {
         println!("...Failed to restart service: {}.", service_name);
-        println!("......Likely forget to run as an Admin.");
+        println!("......Make sure to run the program as an Admin.");
     }
 }
