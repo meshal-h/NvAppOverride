@@ -20,7 +20,6 @@ fn main() {
 
     // Backup files
     println!("Backing up files...");
-
     let xml_path_bak = format!("{}.bak", &xml_path);
     let json_path_bak = format!("{}.bak", &json_path);
 
@@ -40,10 +39,13 @@ fn main() {
     println!("Overriding XML file...");
     let xml_file = read_to_string(&xml_path).unwrap();
     let xml_new_file = override_xml(&xml_file);
+
     let mut xml_perms = metadata(&xml_path).unwrap().permissions();
     xml_perms.set_readonly(false);
     set_permissions(&xml_path, xml_perms.clone()).unwrap();
+
     write(&xml_path, xml_new_file).unwrap();
+
     xml_perms.set_readonly(true);
     set_permissions(&xml_path, xml_perms.clone()).unwrap();
 
@@ -51,6 +53,7 @@ fn main() {
     println!("Overriding JSON file...");
     let json_file = read_to_string(&json_path).unwrap();
     let json_new_file: String = override_json(&json_file);
+    
     write(&json_path, json_new_file).unwrap();
 
     // Restart Services
